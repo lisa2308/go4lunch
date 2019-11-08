@@ -1,4 +1,4 @@
-package com.example.go4lunch.ui;
+package com.example.go4lunch.ui.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.go4lunch.R;
+import com.example.go4lunch.ui.activites.MainActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

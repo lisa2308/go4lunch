@@ -21,12 +21,21 @@
             android:background="@color/colorPrimary"
             app:theme="@style/AppTheme" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/activity_main_tablayout"
+        <FrameLayout
+            android:id="@+id/activity_main_frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/activity_main_bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top">
-        </com.google.android.material.tabs.TabLayout>
+            android:layout_gravity="bottom"
+            android:background="@color/colorText"
+            app:itemIconTint="@drawable/bottom_navigation_color"
+            app:itemTextColor="@drawable/bottom_navigation_color"
+            app:menu="@menu/activity_main_bottom_navigation"/>
     </LinearLayout>
 
     <!-- 2 | NavigationView -->
