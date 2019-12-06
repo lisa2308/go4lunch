@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".ui.activites.MainActivity"
         android:theme="@style/NoActionBarTheme"/>
+        <activity android:name=".ui.activites.RestaurantDetailsActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAe5VwcOtvVeeu245Z6Kj7EgJB7KLrkCJg"/>

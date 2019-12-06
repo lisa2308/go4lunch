@@ -39,7 +39,7 @@ public class WorkmatesFragment extends Fragment {
     }
 
     private void initRecycler() {
-        User user = new User("Scarlett", "Johanson","sj@gmail.com","http://tutos-android-france.com/wp-content/uploads/2015/02/oops.png");
+        User user = new User("Scarlett", "Johanson","sj@gmail.com","https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg");
         List<User> userList = new ArrayList<>();
         userList.add(user);
         WorkmatesAdapter workmatesAdapter = new WorkmatesAdapter(userList);

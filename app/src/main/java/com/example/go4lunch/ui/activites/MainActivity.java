@@ -4,10 +4,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,15 +21,20 @@ import com.example.go4lunch.ui.fragments.ListFragment;
 import com.example.go4lunch.ui.fragments.MapFragment;
 import com.example.go4lunch.ui.fragments.WorkmatesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
+        NavigationView.OnNavigationItemSelectedListener {
 
+    @BindView(R.id.activity_main_nav_view)
+    NavigationView mNavigationView;
+    @BindView(R.id.activity_main_drawer_layout)
+    DrawerLayout drawerLayout;
     @BindView(R.id.activity_main_toolbar)
     Toolbar toolbar;
-
     @BindView(R.id.activity_main_bottom_navigation)
     BottomNavigationView bottomNavigationView;
 
@@ -47,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        mNavigationView.setNavigationItemSelectedListener(this);
+
     }
 
     public void setToolbarTitle(String title){
@@ -73,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
 
             case android.R.id.home:
-               // drawerLayout.openDrawer(GravityCompat.START);
+               drawerLayout.openDrawer(GravityCompat.START);
                 return true;
 
             default:
@@ -105,5 +115,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         transaction.addToBackStack(fragment.getClass().getSimpleName());
         transaction.commit();
     }
+
 
 }

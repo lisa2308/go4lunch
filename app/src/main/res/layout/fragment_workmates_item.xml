@@ -8,8 +8,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/fragment_workmates_item_image"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:src="@drawable/woman"
         app:civ_border_width="2dp"
         app:civ_border_color="#FF000000"/>
@@ -19,7 +19,10 @@
         android:id="@+id/fragment_workmates_item_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Scarlett is eating french (Le Zinc)"/>
+        android:text="Scarlett is eating french (Le Zinc)"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:textSize="16sp"/>
 
 </LinearLayout>
 
