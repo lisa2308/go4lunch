@@ -25,7 +25,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
 
         getActivity().setTitle("I'm Hungry !");
-        //onMapReady();
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fragment_map_googleMap);
         mapFragment.getMapAsync(this);
 
@@ -35,12 +34,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(10, 10))
-                .title("Hello world"));
-
-
+        this.googleMap = googleMap;
+        drawMarker(15,15, "hello");
+        drawMarker(20,20, "bye");
     }
 
+    public void drawMarker(float latitude, float longitude, String title) {
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(latitude, longitude))
+                .title(title));
+
+    }
 
 }
