@@ -11,11 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.go4lunch.R;
-import com.example.go4lunch.data.Restaurant;
-import com.example.go4lunch.data.User;
+import com.example.go4lunch.data.models.Restaurant;
 import com.example.go4lunch.ui.activites.RestaurantDetailsActivity;
 import com.example.go4lunch.ui.adapters.ListAdapter;
-import com.example.go4lunch.ui.adapters.WorkmatesAdapter;
 import com.example.go4lunch.utils.RecyclerViewHolderListener;
 
 import java.util.ArrayList;

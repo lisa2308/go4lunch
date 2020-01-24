@@ -25,7 +25,7 @@
         android:layout_marginLeft="30dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/fragment_workmates_item_image"
+            android:id="@+id/activity_main_nav_header_circle_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:src="@drawable/woman"
@@ -41,12 +41,14 @@
             android:layout_gravity="center">
 
             <TextView
+                android:id="@+id/activity_main_nav_header_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="John SMITH"
                 android:textColor="@color/colorText"
                 android:textStyle="bold"/>
             <TextView
+                android:id="@+id/activity_main_nav_header_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="jsmith.1337@gmail.com"

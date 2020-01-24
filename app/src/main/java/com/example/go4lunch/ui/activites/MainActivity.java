@@ -1,5 +1,6 @@
 package com.example.go4lunch.ui.activites;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,22 +10,34 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.go4lunch.R;
 import com.example.go4lunch.ui.fragments.ListFragment;
 import com.example.go4lunch.ui.fragments.MapFragment;
 import com.example.go4lunch.ui.fragments.WorkmatesFragment;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.data.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         NavigationView.OnNavigationItemSelectedListener {
@@ -38,12 +51,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @BindView(R.id.activity_main_bottom_navigation)
     BottomNavigationView bottomNavigationView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setUpToolbar();
+        setUpNavigationDrawer();
         setUpBottomNavigationView();
         replaceFragment(new MapFragment());
 
@@ -61,6 +76,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public void setToolbarTitle(String title){
         setTitle(title);
+    }
+
+    public void setUpNavigationDrawer() {
+        CircleImageView imageView = mNavigationView.getHeaderView(0).findViewById(R.id.activity_main_nav_header_circle_image);
+        TextView name = mNavigationView.getHeaderView(0).findViewById(R.id.activity_main_nav_header_name);
+        TextView email = mNavigationView.getHeaderView(0).findViewById(R.id.activity_main_nav_header_email);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        name.setText(user.getDisplayName());
+        email.setText(user.getEmail());
+        Picasso.get().load(user.getPhotoUrl()).into(imageView);
     }
 
     public void setUpBottomNavigationView(){
@@ -85,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case android.R.id.home:
                drawerLayout.openDrawer(GravityCompat.START);
                 return true;
-
             default:
                 return true;
         }
@@ -102,6 +127,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
             case R.id.activity_main_bottom_workmates:
                 replaceFragment(new WorkmatesFragment());
+                break;
+
+            case R.id.activity_main_drawer_logout:
+                AuthUI.getInstance()
+                        .signOut(this)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            public void onComplete(@NonNull Task<Void> task) {
+                                // user is now signed out
+                                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                                finish();
+                            }
+                        });
                 break;
         }
         return true;

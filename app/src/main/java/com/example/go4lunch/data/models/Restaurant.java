@@ -1,4 +1,4 @@
-package com.example.go4lunch.data;
+package com.example.go4lunch.data.models;
 
 public class Restaurant {
     private String name;

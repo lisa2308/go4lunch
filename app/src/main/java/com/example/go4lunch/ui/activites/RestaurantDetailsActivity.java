@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.go4lunch.R;
-import com.example.go4lunch.data.User;
+import com.example.go4lunch.data.models.User;
 import com.example.go4lunch.ui.adapters.WorkmatesAdapter;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
     }
 
     private void initRecycler() {
-        User user = new User("Scarlett", "Johanson", "sj@gmail.com", "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg");
+        User user = new User("Scarlett Johanson", "sj@gmail.com", "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg");
         List<User> userList = new ArrayList<>();
         userList.add(user);
         WorkmatesAdapter workmatesAdapter = new WorkmatesAdapter(userList);
