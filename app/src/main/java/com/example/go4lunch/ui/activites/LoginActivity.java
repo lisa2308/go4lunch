@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.go4lunch.R;
@@ -13,8 +14,13 @@ import com.example.go4lunch.ui.activites.MainActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Arrays;
 
@@ -58,7 +64,20 @@ public class LoginActivity extends AppCompatActivity {
             // Successfully signed in
             if (resultCode == RESULT_OK) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                UserHelper.createUser(user.getUid(), user.getDisplayName(), user.getEmail(), user.getPhotoUrl().toString());
+                UserHelper.getUser(user.getUid()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (!task.getResult().exists()){
+                                UserHelper.createUser(user.getUid(), user.getDisplayName(), user.getEmail(), user.getPhotoUrl().toString());
+
+                            }
+                        }
+                    }
+                });
+                //if (!UserHelper.getUser(user.getUid()).getResult().exists()) {
+
                 Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
                 finish();
