@@ -20,6 +20,7 @@ import com.example.go4lunch.data.models.Restaurant;
 import com.example.go4lunch.ui.activites.RestaurantDetailsActivity;
 import com.example.go4lunch.ui.adapters.ListAdapter;
 import com.example.go4lunch.utils.ApiKeys;
+import com.example.go4lunch.utils.PlacesUtils;
 import com.example.go4lunch.utils.RecyclerViewHolderListener;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -58,6 +59,9 @@ public class ListFragment extends Fragment {
     RecyclerView recyclerView;
     private FusedLocationProviderClient fusedLocationClient;
     private PlacesClient placesClient;
+    private List<Restaurant> restaurantList = new ArrayList<>();
+    private ListAdapter listAdapter;
+
 
 
     @Override
@@ -75,10 +79,6 @@ public class ListFragment extends Fragment {
     }
 
     private void initRecycler() {
-        Restaurant restau = new Restaurant("le Zinc","140 route de la mairie","open","2m",2,1.5f, "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg");
-        List<Restaurant> restaurantList = new ArrayList<>();
-        restaurantList.add(restau);
-
         RecyclerViewHolderListener listener = new RecyclerViewHolderListener() {
             @Override
             public void onItemClicked(RecyclerView.ViewHolder viewHolder, Object item, int pos) {
@@ -90,7 +90,7 @@ public class ListFragment extends Fragment {
 
         //AJOUT LISTENER QUAND ON CLICK + MODIF LIST ADAPTER//
 
-        ListAdapter listAdapter = new ListAdapter(restaurantList, listener);
+        listAdapter = new ListAdapter(restaurantList, listener, placesClient);
 
         //ASSOCIATE ADAPTER WITH RECYCLER//
         recyclerView.setAdapter(listAdapter);
@@ -146,8 +146,15 @@ public class ListFragment extends Fragment {
         List<Place.Field> placeFields = Arrays.asList(
                 Place.Field.NAME,
                 Place.Field.TYPES,
-                Place.Field.ID
-);
+                Place.Field.ID,
+                Place.Field.ADDRESS,
+                Place.Field.OPENING_HOURS,
+                Place.Field.PHONE_NUMBER,
+                Place.Field.PHOTO_METADATAS,
+                Place.Field.UTC_OFFSET,
+                Place.Field.ADDRESS_COMPONENTS,
+                Place.Field.WEBSITE_URI
+        );
 
 // Use the builder to create a FindCurrentPlaceRequest.
         FindCurrentPlaceRequest request =
@@ -156,14 +163,14 @@ public class ListFragment extends Fragment {
         placeResponse.addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 FindCurrentPlaceResponse response = task.getResult();
-                List<PlaceLikelihood> restaurantList = new ArrayList<>();
+                List<PlaceLikelihood> placeLikelihoodList = new ArrayList<>();
                 for (PlaceLikelihood placeLikelihood : response.getPlaceLikelihoods()) {
                     if (placeLikelihood.getPlace().getTypes().contains(Place.Type.RESTAURANT)){
-                        restaurantList.add(placeLikelihood);
+                        placeLikelihoodList.add(placeLikelihood);
 
                     }
                 }
-                getPlacesDetails(restaurantList);
+                getPlacesDetails(placeLikelihoodList);
             } else {
                 Exception exception = task.getException();
                 if (exception instanceof ApiException) {
@@ -175,10 +182,11 @@ public class ListFragment extends Fragment {
 
     }
 
-    public void getPlacesDetails(List<PlaceLikelihood> restaurantList) {
-        for (PlaceLikelihood restaurant : restaurantList) {
+    public void getPlacesDetails(List<PlaceLikelihood> placeLikelihoodList) {
+        for (PlaceLikelihood placeLikelihood : placeLikelihoodList) {
             // Define a Place ID.
-            String placeId = restaurant.getPlace().getId();
+            String placeId = placeLikelihood.getPlace().getId();
+
 
 // Specify the fields to return.
             List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
@@ -188,7 +196,27 @@ public class ListFragment extends Fragment {
 
             placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
                 Place place = response.getPlace();
-                Log.i("LOL", "Place found: " + place.getName());
+                Restaurant restau = new Restaurant(
+                        place.getId(),
+                        place.getName(),
+                        place.getAddress(),
+                        place.getOpeningHours().toString(),
+                       "2m",
+                        2,
+                        place.getRating(),
+                        place.getPhotoMetadatas().get(0),
+                        PlacesUtils.getWebSiteUrl(place.getWebsiteUri()),
+                        place.getPhoneNumber(),
+                        place.isOpen()
+                );
+                restaurantList.add(restau);
+                listAdapter.notifyDataSetChanged();
+
+
+
+
+
+
             }).addOnFailureListener((exception) -> {
                 if (exception instanceof ApiException) {
                     ApiException apiException = (ApiException) exception;

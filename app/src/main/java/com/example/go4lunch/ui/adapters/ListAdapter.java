@@ -1,5 +1,7 @@
 package com.example.go4lunch.ui.adapters;
 
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.go4lunch.R;
 import com.example.go4lunch.data.models.Restaurant;
 import com.example.go4lunch.utils.RecyclerViewHolderListener;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.libraries.places.api.net.FetchPhotoRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -23,10 +28,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListHolder>{
 
     List<Restaurant> restaurantList;
     RecyclerViewHolderListener listener;
+    PlacesClient placesClient;
 
-    public ListAdapter(List<Restaurant> restaurantList, RecyclerViewHolderListener listener){
+    public ListAdapter(List<Restaurant> restaurantList, RecyclerViewHolderListener listener, PlacesClient placesClient){
         this.restaurantList = restaurantList;
         this.listener = listener;
+        this.placesClient = placesClient;
     }
 
     public static class ListHolder extends RecyclerView.ViewHolder{
@@ -64,8 +71,21 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListHolder>{
         holder.openingHours.setText(restaurant.getOpeningHours());
         holder.distance.setText(restaurant.getDistance());
         holder.workmates.setText('(' + String.valueOf(restaurant.getWorkmates()) + ')');
-        holder.ratingBar.setRating(restaurant.getRatingBar());
-        Picasso.get().load(restaurant.getPhoto()).into(holder.photo);
+        holder.ratingBar.setRating((float)restaurant.getRatingBar());
+        // Create a FetchPhotoRequest.
+        FetchPhotoRequest photoRequest = FetchPhotoRequest.builder(restaurant.getPhoto()).build();
+        placesClient.fetchPhoto(photoRequest).addOnSuccessListener((fetchPhotoResponse) -> {
+            Bitmap bitmap = fetchPhotoResponse.getBitmap();
+            holder.photo.setImageBitmap(bitmap);
+        }).addOnFailureListener((exception) -> {
+            if (exception instanceof ApiException) {
+                ApiException apiException = (ApiException) exception;
+                int statusCode = apiException.getStatusCode();
+                // Handle error with given status code.
+                Log.e("", "Place not found: " + exception.getMessage());
+            }
+        });
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

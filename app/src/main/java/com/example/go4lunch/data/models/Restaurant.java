@@ -1,16 +1,23 @@
 package com.example.go4lunch.data.models;
 
+import com.google.android.libraries.places.api.model.PhotoMetadata;
+
 public class Restaurant {
+    private String id;
     private String name;
     private String address;
     private String openingHours;
     private String distance;
     private int workmates;
-    private float ratingBar;
-    private String photo;
+    private double ratingBar;
+    private PhotoMetadata photo;
+    private String webSiteUrl;
+    private String phoneNumber;
+    private boolean isOpen;
 
 
-    public Restaurant(String name, String address, String openingHours, String distance, int workmates, float ratingBar, String photo) {
+    public Restaurant(String id, String name, String address, String openingHours, String distance, int workmates, double ratingBar, PhotoMetadata photo, String webSiteUrl, String phoneNumber, boolean isOpen) {
+        this.id = id;
         this.name = name;
         this.address = address;
         this.openingHours = openingHours;
@@ -18,6 +25,17 @@ public class Restaurant {
         this.workmates = workmates;
         this.ratingBar = ratingBar;
         this.photo = photo;
+        this.webSiteUrl = webSiteUrl;
+        this.phoneNumber = phoneNumber;
+        this.isOpen = isOpen;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -60,19 +78,46 @@ public class Restaurant {
         this.workmates = workmates;
     }
 
-    public float getRatingBar() {
+    public double getRatingBar() {
         return ratingBar;
     }
 
-    public void setRatingBar(float ratingBar) {
+    public void setRatingBar(double ratingBar) {
         this.ratingBar = ratingBar;
     }
 
-    public String getPhoto() {
+    public PhotoMetadata getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(PhotoMetadata photo) {
         this.photo = photo;
     }
+
+    public String getWebSiteUrl() {
+        return webSiteUrl;
+    }
+
+    public void setWebSiteUrl(String webSiteUrl) {
+        this.webSiteUrl = webSiteUrl;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(boolean open) {
+        isOpen = open;
+    }
 }
+
+
+
