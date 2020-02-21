@@ -1,5 +1,7 @@
 package com.example.go4lunch.ui.adapters;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +49,18 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.Work
 
         //position liée à la ligne donc change toute seule//
         final User user = userList.get(position);
+        if (user.getRestaurantId() == null) {
+            holder.textView.setText(user.getUsername() + "hasn't decided yet");
+            holder.textView.setTextColor(Color.GRAY);
+            holder.textView.setTypeface(null, Typeface.ITALIC);
+
+        }
+        else {
+            holder.textView.setText(user.getUsername() + "is eating at");
+            holder.textView.setTextColor(Color.BLACK);
+            holder.textView.setTypeface(null, Typeface.NORMAL);
+
+        }
         Picasso.get().load(user.getPhoto()).into(holder.imageView);
     }
 
