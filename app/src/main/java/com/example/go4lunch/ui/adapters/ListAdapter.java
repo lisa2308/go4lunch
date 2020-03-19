@@ -1,5 +1,9 @@
 package com.example.go4lunch.ui.adapters;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,11 +11,15 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.go4lunch.R;
 import com.example.go4lunch.data.models.Restaurant;
 import com.example.go4lunch.utils.RecyclerViewHolderListener;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.libraries.places.api.net.FetchPhotoRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,12 +29,19 @@ import butterknife.ButterKnife;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListHolder>{
 
+    Context context;
     List<Restaurant> restaurantList;
     RecyclerViewHolderListener listener;
+    PlacesClient placesClient;
 
-    public ListAdapter(List<Restaurant> restaurantList, RecyclerViewHolderListener listener){
+    public ListAdapter(Context context,
+                       List<Restaurant> restaurantList,
+                       RecyclerViewHolderListener listener,
+                       PlacesClient placesClient){
+        this.context = context;
         this.restaurantList = restaurantList;
         this.listener = listener;
+        this.placesClient = placesClient;
     }
 
     public static class ListHolder extends RecyclerView.ViewHolder{
@@ -64,8 +79,38 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListHolder>{
         holder.openingHours.setText(restaurant.getOpeningHours());
         holder.distance.setText(restaurant.getDistance());
         holder.workmates.setText('(' + String.valueOf(restaurant.getWorkmates()) + ')');
-        holder.ratingBar.setRating(restaurant.getRatingBar());
-        Picasso.get().load(restaurant.getPhoto()).into(holder.photo);
+        holder.ratingBar.setRating(5);
+
+        if (restaurant.getRatingBar() < 2.3d) {
+            holder.ratingBar.setNumStars(1);
+        } else if (restaurant.getRatingBar() > 3.6d) {
+            holder.ratingBar.setNumStars(3);
+        } else {
+            holder.ratingBar.setNumStars(2);
+        }
+
+        if (restaurant.isOpen()) {
+            holder.openingHours.setTextColor(ContextCompat.getColor(context, R.color.gris));
+            holder.openingHours.setTypeface(null, Typeface.ITALIC);
+        } else {
+            holder.openingHours.setTextColor(ContextCompat.getColor(context, R.color.colorRed));
+            holder.openingHours.setTypeface(null, Typeface.BOLD);
+        }
+
+        // Create a FetchPhotoRequest.
+        FetchPhotoRequest photoRequest = FetchPhotoRequest.builder(restaurant.getPhoto()).build();
+        placesClient.fetchPhoto(photoRequest).addOnSuccessListener((fetchPhotoResponse) -> {
+            Bitmap bitmap = fetchPhotoResponse.getBitmap();
+            holder.photo.setImageBitmap(bitmap);
+        }).addOnFailureListener((exception) -> {
+            if (exception instanceof ApiException) {
+                ApiException apiException = (ApiException) exception;
+                int statusCode = apiException.getStatusCode();
+                // Handle error with given status code.
+                Log.e("ERROR", "Place not found: " + exception.getMessage());
+            }
+        });
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

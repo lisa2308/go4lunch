@@ -24,15 +24,13 @@ public class UserHelper {
     }
 
     // --- GET ---
-
     public static Task<DocumentSnapshot> getUser(String id){
         return UserHelper.getUsersCollection().document(id).get();
     }
 
     // --- UPDATE ---
-
-    public static Task<Void> updateRestaurantId(String email, String restaurantId) {
-        return UserHelper.getUsersCollection().document(email).update("restaurantId", restaurantId);
+    public static Task<Void> updateRestaurantId(String id, String restaurantId) {
+        return UserHelper.getUsersCollection().document(id).update("restaurantId", restaurantId);
     }
 
 }

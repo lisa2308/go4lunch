@@ -1,6 +1,7 @@
 package com.example.go4lunch.ui.fragments;
 
 import android.Manifest;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,15 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.go4lunch.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -24,8 +29,9 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-    SupportMapFragment mapFragment;
-    GoogleMap googleMap;
+    private SupportMapFragment mapFragment;
+    private GoogleMap googleMap;
+    private FusedLocationProviderClient fusedLocationClient;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,9 +49,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-        drawMarker(15,15, "hello");
-        drawMarker(20,20, "bye");
-
         askLocalisationPermission();
     }
 
@@ -53,7 +56,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(latitude, longitude))
                 .title(title));
-
     }
 
     public void askLocalisationPermission() {
@@ -64,7 +66,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         requestUserLocalisation();
                     }
                     @Override public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(getContext(), "yo", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "L'autorisation est obligatoire pour utiliser l'application", Toast.LENGTH_LONG).show();
 
                     }
                     @Override public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
@@ -74,6 +76,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public void requestUserLocalisation() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
 
+                        if (location != null) {
+                            zoomOnUserLocation(location.getLatitude(), location.getLongitude());
+                        } else {
+                            Toast.makeText(getContext(), "Nous n'arrivons pas à accéder à votre localisation", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    public void zoomOnUserLocation(double userLat, double userLng) {
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(userLat, userLng), 14.5f));
     }
 }
