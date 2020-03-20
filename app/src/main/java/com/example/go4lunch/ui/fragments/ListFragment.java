@@ -1,6 +1,7 @@
 package com.example.go4lunch.ui.fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -53,7 +54,6 @@ public class ListFragment extends Fragment {
 
     @BindView(R.id.fragment_list_recycler_view)
     RecyclerView recyclerView;
-
     private FusedLocationProviderClient fusedLocationClient;
     private PlacesClient placesClient;
     private List<Restaurant> restaurantList = new ArrayList<>();
@@ -92,12 +92,11 @@ public class ListFragment extends Fragment {
                 i.putExtra("website", restaurant.getWebsiteUrl());
 
                 startActivity(i);
+
             }
         };
 
         //AJOUT LISTENER QUAND ON CLICK + MODIF LIST ADAPTER//
-
-        listAdapter = new ListAdapter(getContext(), restaurantList, listener, placesClient);
 
         //ASSOCIATE ADAPTER WITH RECYCLER//
         recyclerView.setAdapter(listAdapter);
@@ -122,6 +121,7 @@ public class ListFragment extends Fragment {
                 }).check();
     }
 
+    @SuppressLint("MissingPermission")
     public void requestUserLocalisation() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         fusedLocationClient.getLastLocation()
@@ -154,13 +154,13 @@ public class ListFragment extends Fragment {
         );
         FindCurrentPlaceRequest request = FindCurrentPlaceRequest.newInstance(placeFields);
 
-        Task<FindCurrentPlaceResponse> placeResponse = placesClient.findCurrentPlace(request);
+        @SuppressLint("MissingPermission") Task<FindCurrentPlaceResponse> placeResponse = placesClient.findCurrentPlace(request);
         placeResponse.addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 FindCurrentPlaceResponse response = task.getResult();
                 List<PlaceLikelihood> placeLikelihoodList = new ArrayList<>();
                 for (PlaceLikelihood placeLikelihood : response.getPlaceLikelihoods()) {
-                    if (placeLikelihood.getPlace().getTypes().contains(Place.Type.RESTAURANT)) {
+                    if (placeLikelihood.getPlace().getTypes().contains(Place.Type.RESTAURANT)){
                         placeLikelihoodList.add(placeLikelihood);
                     }
                 }
@@ -201,7 +201,6 @@ public class ListFragment extends Fragment {
 
             placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
                 Place place = response.getPlace();
-
                 Restaurant restau = new Restaurant(
                         place.getId(),
                         place.getName(),
@@ -226,8 +225,8 @@ public class ListFragment extends Fragment {
                     Log.e("ERROR", "Place not found: " + exception.getMessage());
                 }
             });
-        }
     }
+}
 
 }
 

@@ -1,6 +1,7 @@
 package com.example.go4lunch.ui.fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -75,6 +76,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 }).check();
     }
 
+    @SuppressLint("MissingPermission")
     public void requestUserLocalisation() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         fusedLocationClient.getLastLocation()
