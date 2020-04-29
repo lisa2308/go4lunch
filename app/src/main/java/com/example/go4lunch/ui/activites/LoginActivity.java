@@ -86,16 +86,16 @@ public class LoginActivity extends AppCompatActivity {
                 // Sign in failed
                 if (response == null) {
                     // User pressed back button
-                    Toast.makeText(this,"Connexion annulée", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getText(R.string.connexionCanceled), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
-                    Toast.makeText(this,"Pas de connexion internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,getText(R.string.noInternetConnexion), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                Toast.makeText(this,"Erreur inconnue", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,getText(R.string.unKnownError), Toast.LENGTH_SHORT).show();
             }
         }
     }

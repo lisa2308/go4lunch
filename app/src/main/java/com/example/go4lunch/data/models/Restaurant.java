@@ -9,13 +9,13 @@ public class Restaurant {
     private String openingHours;
     private String distance;
     private int workmates;
-    private double ratingBar;
+    private Double ratingBar;
     private PhotoMetadata photo;
     private String websiteUrl;
     private String phoneNumber;
-    private boolean isOpen;
+    private Boolean isOpen;
 
-    public Restaurant(String id, String name, String address, String openingHours, String distance, int workmates, double ratingBar, PhotoMetadata photo, String websiteUrl, String phoneNumber, boolean isOpen) {
+    public Restaurant(String id, String name, String address, String openingHours, String distance, int workmates, Double ratingBar, PhotoMetadata photo, String websiteUrl, String phoneNumber, Boolean isOpen) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -77,11 +77,11 @@ public class Restaurant {
         this.workmates = workmates;
     }
 
-    public double getRatingBar() {
+    public Double getRatingBar() {
         return ratingBar;
     }
 
-    public void setRatingBar(double ratingBar) {
+    public void setRatingBar(Double ratingBar) {
         this.ratingBar = ratingBar;
     }
 
@@ -109,11 +109,11 @@ public class Restaurant {
         this.phoneNumber = phoneNumber;
     }
 
-    public boolean isOpen() {
+    public Boolean isOpen() {
         return isOpen;
     }
 
-    public void setOpen(boolean open) {
+    public void setOpen(Boolean open) {
         isOpen = open;
     }
 }

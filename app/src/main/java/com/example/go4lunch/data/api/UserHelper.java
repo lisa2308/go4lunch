@@ -33,4 +33,7 @@ public class UserHelper {
         return UserHelper.getUsersCollection().document(id).update("restaurantId", restaurantId);
     }
 
+    public static Task<Void> updateRestaurantName(String id, String restaurantName) {
+        return UserHelper.getUsersCollection().document(id).update("restaurantName", restaurantName);
+    }
 }

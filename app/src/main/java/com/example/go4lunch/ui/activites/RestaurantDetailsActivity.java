@@ -33,6 +33,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +72,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
     String website;
 
     FirebaseUser connectedUser;
+    List<User> userList = new ArrayList<>();
+    WorkmatesAdapter workmatesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +98,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
 
         initRecycler();
         checkIfUserParticipateToRestaurant();
+        getParticipants();
 
-        // todo: quand on clique sur le bouton favoris, mettre à jour la base de donnees en donnant au restaurant ID la valeur du restaurant ID
-
-        // todo: iterer sur la liste de tous les utilisateurs et verifier si ils mangent dans ce restaurant (avec le restaurant ID)
-        // si oui -> on les ajoute à la liste de workmate puis on rafraichit l'adapteur
-        // si non -> on l'ajoute pas
     }
 
     private void initViews() {
@@ -136,10 +136,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
     }
 
     private void initRecycler() {
-        User user = new User("Scarlett Johanson", "sj@gmail.com", "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg");
-        List<User> userList = new ArrayList<>();
-        userList.add(user);
-        WorkmatesAdapter workmatesAdapter = new WorkmatesAdapter(userList);
+        workmatesAdapter = new WorkmatesAdapter(userList, false);
 
         //ASSOCIATE ADAPTER WITH RECYCLER//
         recyclerView.setAdapter(workmatesAdapter);
@@ -154,8 +151,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     if (task.getResult() != null) {
                         String userRestaurantId = task.getResult().getString("restaurantId");
-                        if (userRestaurantId.equals(placeId)) {
-                            activatePaticipateButton();
+                        if (placeId.equals(userRestaurantId)) {
+                            activatePaticipateButton(true);
                         }
                     }
                 }
@@ -164,18 +161,52 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
 
     }
 
-    public void activatePaticipateButton() {
-        fabParticipate.setSelected(true);
-//        fabParticipate.setColorFilter(ContextCompat.getColor(this, R.color.quantum_googgreen));
+    public void activatePaticipateButton(boolean activate) {
+        if (activate) {
+            fabParticipate.setSelected(true);
+            fabParticipate.setColorFilter(ContextCompat.getColor(this, R.color.quantum_lightgreen500));
+        } else {
+            fabParticipate.setSelected(false);
+            fabParticipate.setColorFilter(ContextCompat.getColor(this, R.color.quantum_grey500));
+        }
     }
+
+    private void getParticipants() {
+        UserHelper.getUsersCollection().get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            userList.clear();
+                            for (DocumentSnapshot document : task.getResult()) {
+                                User user = document.toObject(User.class);
+                                if (placeId.equals(user.getRestaurantId())) {
+                                    userList.add(user);
+                                }
+                            }
+
+                            workmatesAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
 
     @OnClick(R.id.activity_rest_details_participate)
     public void clickParticipate(View v) {
         if (v.isSelected()) {
             UserHelper.updateRestaurantId(connectedUser.getUid(), null);
+            UserHelper.updateRestaurantName(connectedUser.getUid(), null);
+            activatePaticipateButton(false);
         } else {
             UserHelper.updateRestaurantId(connectedUser.getUid(), placeId);
+            UserHelper.updateRestaurantName(connectedUser.getUid(), name);
+
+            activatePaticipateButton(true);
         }
+        getParticipants();
     }
 
     @OnClick(R.id.activity_rest_details_call)

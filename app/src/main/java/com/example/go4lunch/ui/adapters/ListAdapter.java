@@ -81,20 +81,30 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListHolder>{
         holder.workmates.setText('(' + String.valueOf(restaurant.getWorkmates()) + ')');
         holder.ratingBar.setRating(5);
 
-        if (restaurant.getRatingBar() < 2.3d) {
+        if (restaurant.getRatingBar() == null) {
             holder.ratingBar.setNumStars(1);
-        } else if (restaurant.getRatingBar() > 3.6d) {
-            holder.ratingBar.setNumStars(3);
-        } else {
-            holder.ratingBar.setNumStars(2);
+
+        }else {
+            if (restaurant.getRatingBar() < 2.3d) {
+                holder.ratingBar.setNumStars(1);
+            } else if (restaurant.getRatingBar() > 3.6d) {
+                holder.ratingBar.setNumStars(3);
+            } else {
+                holder.ratingBar.setNumStars(2);
+            }
         }
 
-        if (restaurant.isOpen()) {
+        if (restaurant.isOpen() == null){
             holder.openingHours.setTextColor(ContextCompat.getColor(context, R.color.gris));
             holder.openingHours.setTypeface(null, Typeface.ITALIC);
-        } else {
-            holder.openingHours.setTextColor(ContextCompat.getColor(context, R.color.colorRed));
-            holder.openingHours.setTypeface(null, Typeface.BOLD);
+        }else {
+            if (restaurant.isOpen()) {
+                holder.openingHours.setTextColor(ContextCompat.getColor(context, R.color.gris));
+                holder.openingHours.setTypeface(null, Typeface.ITALIC);
+            } else {
+                holder.openingHours.setTextColor(ContextCompat.getColor(context, R.color.colorRed));
+                holder.openingHours.setTypeface(null, Typeface.BOLD);
+            }
         }
 
         // Create a FetchPhotoRequest.

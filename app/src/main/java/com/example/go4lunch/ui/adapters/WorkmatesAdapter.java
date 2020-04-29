@@ -20,9 +20,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.WorkmatesHolder>{
 
     List<User> userList;
+    boolean isWorkmateView;
 
-    public WorkmatesAdapter(List<User> userList){
+    public WorkmatesAdapter(List<User> userList, boolean isWorkmateView){
         this.userList = userList;
+        this.isWorkmateView = isWorkmateView;
     }
 
     public static class WorkmatesHolder extends RecyclerView.ViewHolder{
@@ -50,17 +52,24 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.Work
         //position liée à la ligne donc change toute seule//
         final User user = userList.get(position);
         if (user.getRestaurantId() == null) {
-            holder.textView.setText(user.getUsername() + " " + "hasn't decided yet");
+            holder.textView.setText(user.getUsername() + "hasn't decided yet");
             holder.textView.setTextColor(Color.GRAY);
             holder.textView.setTypeface(null, Typeface.ITALIC);
 
         }
         else {
-            holder.textView.setText(user.getUsername() + " " + "is eating at");
+            if (isWorkmateView) {
+            holder.textView.setText(user.getUsername() + "is eating at" + user.getRestaurantName());
             holder.textView.setTextColor(Color.BLACK);
             holder.textView.setTypeface(null, Typeface.NORMAL);
 
-        }
+        }else {
+                holder.textView.setText(user.getUsername() + "is joining");
+                holder.textView.setTextColor(Color.BLACK);
+                holder.textView.setTypeface(null, Typeface.NORMAL);
+            }
+
+            }
         Picasso.get().load(user.getPhoto()).into(holder.imageView);
     }
 

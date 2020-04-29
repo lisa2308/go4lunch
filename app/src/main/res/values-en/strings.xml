@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Go4Lunch</string>
+
+    <!-- BOTTOM NAVIGATION VIEW -->
+    <string name="bottom_navigation_menu_map">Map View</string>
+    <string name="bottom_navigation_menu_list">List View</string>
+    <string name="bottom_navigation_menu_workmates">Workmates</string>
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <!-- <string name="facebook_application_id" translatable="false">654397378637543</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb654397378637543</string>
+    <string name="twitter_consumer_key">JAWDmFrjWAqW7hyZQZnUy0Hep</string>
+    <string name="twitter_consumer_secret">G4rTznbmb35LqZA8t8APdaY7dxdYHEHsYzyA3PfKY8viPZpk0i</string>-->
+</resources>
+

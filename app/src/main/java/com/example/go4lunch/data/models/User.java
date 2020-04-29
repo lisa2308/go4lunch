@@ -7,6 +7,7 @@ public class User {
     private String email;
     private String photo;
     private String restaurantId;
+    private String restaurantName;
 
     public User() {
     }
@@ -16,7 +17,9 @@ public class User {
         this.email = email;
         this.photo = photo;
         this.restaurantId = null;
+        this.restaurantName = null;
     }
+
 
     public String getUsername() {
         return username;
@@ -48,6 +51,14 @@ public class User {
 
     public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 }
 

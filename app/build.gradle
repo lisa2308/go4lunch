@@ -18,6 +18,16 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            //string minuscule et resvalue pour fichier xml
+            resValue 'string', "facebook_application_id", facebook_application_id
+            resValue 'string', "facebook_login_protocol_scheme", facebook_login_protocol_scheme
+            resValue 'string', "twitter_consumer_key", twitter_consumer_key
+            resValue 'string', "twitter_consumer_secret", twitter_consumer_secret
+            //String majuscule et buildConfigFiled pour fichier java
+            buildConfigField 'String', "placesKey", placesKey
+
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -51,5 +61,6 @@ dependencies {
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
     implementation 'com.karumi:dexter:6.0.2'
     implementation 'com.google.android.libraries.places:places:2.0.0'
+
 }
 apply plugin: 'com.google.gms.google-services'

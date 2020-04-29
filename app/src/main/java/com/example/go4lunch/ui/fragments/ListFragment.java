@@ -11,21 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.go4lunch.R;
+import com.example.go4lunch.data.api.UserHelper;
 import com.example.go4lunch.data.models.Restaurant;
+import com.example.go4lunch.data.models.User;
 import com.example.go4lunch.ui.activites.RestaurantDetailsActivity;
 import com.example.go4lunch.ui.adapters.ListAdapter;
 import com.example.go4lunch.utils.ApiKeys;
 import com.example.go4lunch.utils.PlacesUtils;
 import com.example.go4lunch.utils.RecyclerViewHolderListener;
+import com.example.go4lunch.utils.SearchableFragment;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
@@ -35,6 +40,8 @@ import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -50,7 +57,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment implements SearchableFragment {
 
     @BindView(R.id.fragment_list_recycler_view)
     RecyclerView recyclerView;
@@ -68,7 +75,6 @@ public class ListFragment extends Fragment {
         ButterKnife.bind(this, v);
 
         getActivity().setTitle("I'm Hungry !");
-
         initPlacesClient();
         initRecycler();
         askLocalisationPermission();
@@ -97,6 +103,7 @@ public class ListFragment extends Fragment {
         };
 
         //AJOUT LISTENER QUAND ON CLICK + MODIF LIST ADAPTER//
+        listAdapter = new ListAdapter(getContext(), restaurantList, listener, placesClient);
 
         //ASSOCIATE ADAPTER WITH RECYCLER//
         recyclerView.setAdapter(listAdapter);
@@ -177,45 +184,32 @@ public class ListFragment extends Fragment {
 
     public void getPlacesDetails(List<PlaceLikelihood> placeLikelihoodList) {
 
+        // Specify the fields to return.
+        List<Place.Field> placeFields = Arrays.asList(
+                Place.Field.ID,
+                Place.Field.NAME,
+                Place.Field.LAT_LNG,
+                Place.Field.ADDRESS,
+                Place.Field.ADDRESS_COMPONENTS,
+                Place.Field.OPENING_HOURS,
+                Place.Field.RATING,
+                Place.Field.PHOTO_METADATAS,
+                Place.Field.WEBSITE_URI,
+                Place.Field.PHONE_NUMBER,
+                Place.Field.UTC_OFFSET
+        );
+
         for (PlaceLikelihood placeLikelihood : placeLikelihoodList) {
             // Define a Place ID.
             String placeId = placeLikelihood.getPlace().getId();
 
-            // Specify the fields to return.
-            List<Place.Field> placeFields = Arrays.asList(
-                    Place.Field.ID,
-                    Place.Field.NAME,
-                    Place.Field.LAT_LNG,
-                    Place.Field.ADDRESS,
-                    Place.Field.ADDRESS_COMPONENTS,
-                    Place.Field.OPENING_HOURS,
-                    Place.Field.RATING,
-                    Place.Field.PHOTO_METADATAS,
-                    Place.Field.WEBSITE_URI,
-                    Place.Field.PHONE_NUMBER,
-                    Place.Field.UTC_OFFSET
-            );
 
             // Construct a request object, passing the place ID and fields array.
             FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
 
             placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
                 Place place = response.getPlace();
-                Restaurant restau = new Restaurant(
-                        place.getId(),
-                        place.getName(),
-                        place.getAddress(),
-                        PlacesUtils.getHoursFromOpeningHours(place.getOpeningHours(), place.isOpen()),
-                        PlacesUtils.getDistanceBetweenTwoPoints(userLatLng, place.getLatLng()),
-                        2,
-                        place.getRating(),
-                        place.getPhotoMetadatas().get(0),
-                        PlacesUtils.getWebsiteUrl(place.getWebsiteUri()),
-                        place.getPhoneNumber(),
-                        place.isOpen()
-                );
-                restaurantList.add(restau);
-                listAdapter.notifyDataSetChanged();
+                getNbWorkmates(place);
 
             }).addOnFailureListener((exception) -> {
                 if (exception instanceof ApiException) {
@@ -225,8 +219,52 @@ public class ListFragment extends Fragment {
                     Log.e("ERROR", "Place not found: " + exception.getMessage());
                 }
             });
+        }
     }
-}
 
+    private void getNbWorkmates(Place place) {
+        UserHelper.getUsersCollection().get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    int nbWorkmates = 0;
+                    for (DocumentSnapshot document : task.getResult()) {
+                        User user = document.toObject(User.class);
+                        if (place.getId().equals(user.getRestaurantId())) {
+                            nbWorkmates = nbWorkmates + 1;
+
+                        }
+                    }
+                    addRestaurant(place, nbWorkmates);
+                }
+            }
+        });
+
+    }
+
+    private void addRestaurant(Place place, int nbWorkmates) {
+        Restaurant restau = new Restaurant(
+                place.getId(),
+                place.getName(),
+                place.getAddress(),
+                PlacesUtils.getHoursFromOpeningHours(place.getOpeningHours(), place.isOpen()),
+                PlacesUtils.getDistanceBetweenTwoPoints(userLatLng, place.getLatLng()),nbWorkmates,
+                place.getRating(),
+                place.getPhotoMetadatas().get(0),
+                PlacesUtils.getWebsiteUrl(place.getWebsiteUri()),
+                place.getPhoneNumber(),
+                place.isOpen()
+        );
+        restaurantList.add(restau);
+        listAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void performSearch(Place place) {
+        restaurantList.clear();
+        getNbWorkmates(place);
+
+    }
 }
 

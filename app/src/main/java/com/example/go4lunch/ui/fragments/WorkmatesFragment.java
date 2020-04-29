@@ -3,10 +3,13 @@ package com.example.go4lunch.ui.fragments;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +41,20 @@ public class WorkmatesFragment extends Fragment {
     WorkmatesAdapter workmatesAdapter;
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.menu_search);
+        if(item != null)
+            item.setVisible(false);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_workmates, container, false);
@@ -52,7 +69,7 @@ public class WorkmatesFragment extends Fragment {
     }
 
     private void initRecycler() {
-        workmatesAdapter = new WorkmatesAdapter(userList);
+        workmatesAdapter = new WorkmatesAdapter(userList, true);
 
         //ASSOCIATE ADAPTER WITH RECYCLER//
         recyclerView.setAdapter(workmatesAdapter);
