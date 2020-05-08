@@ -10,5 +10,36 @@
     <string name="facebook_login_protocol_scheme" translatable="false">fb654397378637543</string>
     <string name="twitter_consumer_key">JAWDmFrjWAqW7hyZQZnUy0Hep</string>
     <string name="twitter_consumer_secret">G4rTznbmb35LqZA8t8APdaY7dxdYHEHsYzyA3PfKY8viPZpk0i</string>-->
+    <!-- Activity login -->
+    <string name="connexionCanceled">Connexion canceled</string>
+    <string name="noInternetConnexion">No internet connexion</string>
+    <string name="unKnownError">Unknown error</string>
+    <!-- Activity main -->
+    <string name="yourLunch">Your lunch</string>
+    <string name="didntSelectedRestaurant">Didn\'t selected restaurant</string>
+    <string name="youEatAT">You eat at</string>
+    <!-- Workmates Adapter -->
+    <string name="hasntDecidedYet">Hasn\'t decided yet</string>
+    <string name="isEatingAt">Is eating at</string>
+    <string name="isJoining">Is joining</string>
+    <!-- List Fragment -->
+    <string name="imHungry">I\'m hungry</string>
+    <string name="authorizationIsRequiredToUseApplication">Authorization is required to use application</string>
+    <string name="weCannotAccessYourLocation">We cannot access your location</string>
+    <!-- Workmates Fragment -->
+    <string name="availableWorkmates">Available workmates</string>
+    <!-- Manifest -->
+    <string name="settings">Settings</string>
+    <!-- activity rest details  -->
+    <string name="call">Call</string>
+    <string name="like">Like</string>
+    <string name="webSite">Website</string>
+    <!--  activity settings  -->
+    <string name="enableNotificationsOncePerDay">Enable notifications (One per day)</string>
+    <!-- fragment list -->
+    <string name="openUntil7Pm">Open until 7pm</string>
+    <!-- fragment workmates item -->
+    <string name="scarlettIsEatingFrenchLeZinc">Scarlett is eating french (Le Zinc)</string>
+
 </resources>
 

@@ -2,9 +2,9 @@
     <string name="app_name">Go4Lunch</string>
 
     <!-- BOTTOM NAVIGATION VIEW -->
-    <string name="bottom_navigation_menu_map">Map View</string>
-    <string name="bottom_navigation_menu_list">List View</string>
-    <string name="bottom_navigation_menu_workmates">Workmates</string>
+    <string name="bottom_navigation_menu_map">Carte</string>
+    <string name="bottom_navigation_menu_list">Liste</string>
+    <string name="bottom_navigation_menu_workmates">Collègues</string>
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <!--<string name="facebook_application_id" translatable="false">654397378637543</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb654397378637543</string>
@@ -19,6 +19,57 @@
     <string name="yourLunch">Votre repas</string>
     <string name="didntSelectedRestaurant">Vous n\'avez pas selectionné de restaurant</string>
     <string name="youEatAT">Vous mangez à</string>
+    <!-- Workmates Adapter -->
+    <string name="hasntDecidedYet">N\'a pas encore décidé</string>
+    <string name="isEatingAt">Mange à</string>
+    <string name="isJoining">Se joint</string>
+    <!-- List Fragment -->
+    <string name="imHungry">J\'ai faim</string>
+    <string name="authorizationIsRequiredToUseApplication">L\'autorisation est obligatoire pour utiliser l\'application</string>
+    <string name="weCannotAccessYourLocation">Nous n\'arrivons pas à accéder à votre localisation</string>
+    <!-- Workmates Fragment -->
+    <string name="availableWorkmates">Collègues disponibles</string>
+    <!-- Manifest -->
+    <string name="settings">Paramètres</string>
+    <!-- activity rest details  -->
+    <string name="call">Appel</string>
+    <string name="like">Aimer</string>
+    <string name="webSite">Site</string>
+    <!--  activity settings  -->
+    <string name="enableNotificationsOncePerDay">Activer les notifcations (une fois par jour)</string>
+    <!-- fragment list -->
+    <string name="openUntil7Pm">Ouvert jusqu\'à 19 heures</string>
+    <!-- fragment workmates item -->
+    <string name="scarlettIsEatingFrenchLeZinc">Scarlett mange français (Le Zinc)</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </resources>

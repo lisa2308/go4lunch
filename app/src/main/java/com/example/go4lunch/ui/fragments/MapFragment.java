@@ -140,7 +140,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Searcha
                         requestUserLocalisation();
                     }
                     @Override public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(getContext(), "L'autorisation est obligatoire pour utiliser l'application", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Authorization is required to use application", Toast.LENGTH_LONG).show();
 
                     }
                     @Override public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
@@ -162,7 +162,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Searcha
                             zoomOnUserLocation(location.getLatitude(), location.getLongitude());
                             getPlacesRestaurants();
                         } else {
-                            Toast.makeText(getContext(), "Nous n'arrivons pas à accéder à votre localisation", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "We cannot access your location", Toast.LENGTH_LONG).show();
                         }
                     }
                 });

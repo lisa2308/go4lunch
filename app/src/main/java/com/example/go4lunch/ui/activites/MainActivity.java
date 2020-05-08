@@ -178,6 +178,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.activity_main_drawer_lunch:
                 checkIfUserParticipateToRestaurant();
                 break;
+            case R.id.activity_main_drawer_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
 
             case R.id.activity_main_drawer_logout:
                 AuthUI.getInstance()
