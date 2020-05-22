@@ -1,5 +1,6 @@
 package com.example.go4lunch.ui.adapters;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -21,10 +22,12 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.Work
 
     List<User> userList;
     boolean isWorkmateView;
+    Context context;
 
-    public WorkmatesAdapter(List<User> userList, boolean isWorkmateView){
+    public WorkmatesAdapter(Context context, List<User> userList, boolean isWorkmateView){
         this.userList = userList;
         this.isWorkmateView = isWorkmateView;
+        this.context = context;
     }
 
     public static class WorkmatesHolder extends RecyclerView.ViewHolder{

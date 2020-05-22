@@ -221,9 +221,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
         alertDialog.setTitle(getString(R.string.yourLunch));
         if (restaurantName == null) {
-            alertDialog.setMessage(getString(R.string.didntSelectedRestaurant));
+            alertDialog.setMessage(getString(R.string.didntSelectRestaurant));
         } else {
-            alertDialog.setMessage(getString(R.string.youEatAT) + " " + restaurantName);
+            alertDialog.setMessage(getString(R.string.youEatAt) + " " + restaurantName);
         }
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", (dialog, which) -> dialog.dismiss());
         alertDialog.show();

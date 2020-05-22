@@ -60,7 +60,7 @@ public class WorkmatesFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_workmates, container, false);
         ButterKnife.bind(this, v);
 
-        getActivity().setTitle("Available workmates");
+        getActivity().setTitle(getString(R.string.availableWorkmates));
         connectedUser = FirebaseAuth.getInstance().getCurrentUser();
         initRecycler();
         retrieveFirebaseWorkmates();
@@ -69,7 +69,7 @@ public class WorkmatesFragment extends Fragment {
     }
 
     private void initRecycler() {
-        workmatesAdapter = new WorkmatesAdapter(userList, true);
+        workmatesAdapter = new WorkmatesAdapter(getContext(),userList, true);
 
         //ASSOCIATE ADAPTER WITH RECYCLER//
         recyclerView.setAdapter(workmatesAdapter);

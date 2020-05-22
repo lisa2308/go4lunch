@@ -17,8 +17,8 @@
     <string name="unKnownError">Erreur inconnue</string>
     <!-- Activity main -->
     <string name="yourLunch">Votre repas</string>
-    <string name="didntSelectedRestaurant">Vous n\'avez pas selectionné de restaurant</string>
-    <string name="youEatAT">Vous mangez à</string>
+    <string name="didntSelectRestaurant">Vous n\'avez pas selectionné de restaurant</string>
+    <string name="youEatAt">Vous mangez à</string>
     <!-- Workmates Adapter -->
     <string name="hasntDecidedYet">N\'a pas encore décidé</string>
     <string name="isEatingAt">Mange à</string>
@@ -41,6 +41,21 @@
     <string name="openUntil7Pm">Ouvert jusqu\'à 19 heures</string>
     <!-- fragment workmates item -->
     <string name="scarlettIsEatingFrenchLeZinc">Scarlett mange français (Le Zinc)</string>
+    <!-- AlarmReceiver item -->
+    <string name="lunchInformations">Information repas</string>
+    <string name="receiveDailyNotificationsAboutYourLunches">Recevez au quotidien des notifications sur vos déjeuners</string>
+    <string name="noWorkmateWillJoinYou">Aucun collègue ne se joindra à vous</string>
+    <string name="youEatWith">Vous mangez avec</string>
+
+    <string name="menu_search">Chercher</string>
+    <string name="activity_main_drawer_lunch">VOS REPAS</string>
+    <string name="activity_main_drawer_settings">REGLAGES</string>
+    <string name="activity_main_drawer_logout">DECONNEXION</string>
+
+
+
+
+
 
 
 

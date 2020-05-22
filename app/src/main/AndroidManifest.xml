@@ -50,6 +50,11 @@
                 <data android:scheme="@string/facebook_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".service.AlarmReceiver"
+            android:exported="false">
+
+        </receiver>
     </application>
 
 

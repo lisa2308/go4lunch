@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enable notifications(once per day)" />
+            android:text="@string/enableNotificationsOncePerDay" />
         <Switch
             android:id="@+id/activity_settings_switch"
             android:layout_width="match_parent"

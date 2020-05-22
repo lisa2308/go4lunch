@@ -136,7 +136,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
     }
 
     private void initRecycler() {
-        workmatesAdapter = new WorkmatesAdapter(userList, false);
+        workmatesAdapter = new WorkmatesAdapter(this, userList, false);
 
         //ASSOCIATE ADAPTER WITH RECYCLER//
         recyclerView.setAdapter(workmatesAdapter);

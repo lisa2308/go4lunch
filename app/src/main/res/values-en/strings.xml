@@ -16,8 +16,8 @@
     <string name="unKnownError">Unknown error</string>
     <!-- Activity main -->
     <string name="yourLunch">Your lunch</string>
-    <string name="didntSelectedRestaurant">Didn\'t selected restaurant</string>
-    <string name="youEatAT">You eat at</string>
+    <string name="didntSelectRestaurant">Didn\'t selected restaurant</string>
+    <string name="youEatAt">You eat at</string>
     <!-- Workmates Adapter -->
     <string name="hasntDecidedYet">Hasn\'t decided yet</string>
     <string name="isEatingAt">Is eating at</string>
@@ -40,6 +40,18 @@
     <string name="openUntil7Pm">Open until 7pm</string>
     <!-- fragment workmates item -->
     <string name="scarlettIsEatingFrenchLeZinc">Scarlett is eating french (Le Zinc)</string>
+    <!-- AlarmReceiver item -->
+    <string name="lunchInformations">Lunch informations</string>
+    <string name="receiveDailyNotificationsAboutYourLunches">Receive daily notifications about your lunches</string>
+    <string name="noWorkmateWillJoinYou">No workmate will join you</string>
+    <string name="youEatWith">You eat with</string>
+
+    <string name="menu_search">Search</string>
+    <string name="activity_main_drawer_lunch">YOUR LUNCH</string>
+    <string name="activity_main_drawer_settings">SETTINGS</string>
+    <string name="activity_main_drawer_logout">LOGOUT</string>
+
+
 
 </resources>
 

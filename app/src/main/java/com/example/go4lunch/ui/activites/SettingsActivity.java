@@ -2,6 +2,8 @@ package com.example.go4lunch.ui.activites;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -9,6 +11,7 @@ import android.widget.Switch;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.go4lunch.R;
+import com.example.go4lunch.service.AlarmReceiver;
 import com.example.go4lunch.utils.SharedPreferencesManager;
 
 import java.util.Calendar;
@@ -16,6 +19,8 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
+
+import static android.app.PendingIntent.getBroadcast;
 
 
 public class SettingsActivity extends AppCompatActivity {
@@ -31,8 +36,15 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
+        initAlarm();
         initSwitchButton();
 
+    }
+
+    private void initAlarm() {
+        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent intent= new Intent(this, AlarmReceiver.class);
+        alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
     }
 
     private void initSwitchButton() {
@@ -58,10 +70,10 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void enableAlarmManager() {
+        disableAlarmManager();
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 11);
-        calendar.set(Calendar.MINUTE, 20);
+        calendar.set(Calendar.HOUR_OF_DAY, 17);
+        calendar.set(Calendar.MINUTE, 00);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent);
     }
