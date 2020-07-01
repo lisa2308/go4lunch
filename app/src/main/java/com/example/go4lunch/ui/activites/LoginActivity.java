@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.go4lunch.R;
 import com.example.go4lunch.data.api.UserHelper;
 import com.example.go4lunch.ui.activites.MainActivity;
+import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
@@ -43,6 +44,12 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         } else {
             // not signed in
+            AuthMethodPickerLayout customLayout = new AuthMethodPickerLayout
+                    .Builder(R.layout.activity_login)
+                    .setGoogleButtonId(R.id.activity_login_btn_google)
+                    .setFacebookButtonId(R.id.activity_login_btn_facebook)
+                    .setTwitterButtonId(R.id.activity_login_btn_twitter)
+                    .build();
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
@@ -50,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                                     new AuthUI.IdpConfig.GoogleBuilder().build(),
                                     new AuthUI.IdpConfig.FacebookBuilder().build(),
                                     new AuthUI.IdpConfig.TwitterBuilder().build()))
+                            .setAuthMethodPickerLayout(customLayout)
                             .build(),
                     RC_SIGN_IN);
         }

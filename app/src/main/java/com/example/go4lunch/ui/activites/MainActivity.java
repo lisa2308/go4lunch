@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         });
     }
 
-    private void showDialogCurrentRestaurant(String restaurantName) {
+    public void showDialogCurrentRestaurant(String restaurantName) {
         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
         alertDialog.setTitle(getString(R.string.yourLunch));
         if (restaurantName == null) {

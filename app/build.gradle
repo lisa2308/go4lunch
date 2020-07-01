@@ -29,6 +29,9 @@ android {
 
         }
     }
+    testOptions{
+        unitTests.returnDefaultValues = true
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -43,6 +46,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.google.firebase:firebase-core:17.2.0'
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.robolectric:robolectric:4.2.1'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.jakewharton:butterknife:10.2.0'
@@ -61,6 +65,8 @@ dependencies {
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
     implementation 'com.karumi:dexter:6.0.2'
     implementation 'com.google.android.libraries.places:places:2.0.0'
+    androidTestImplementation 'androidx.test:rules:1.1.0'
+
 
 }
 apply plugin: 'com.google.gms.google-services'
