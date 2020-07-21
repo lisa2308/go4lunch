@@ -74,7 +74,7 @@ public class ListFragment extends Fragment implements SearchableFragment {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.bind(this, v);
 
-        getActivity().setTitle("I'm Hungry !");
+        getActivity().setTitle(getContext().getString(R.string.imHungry));
         initPlacesClient();
         initRecycler();
         askLocalisationPermission();
@@ -119,7 +119,7 @@ public class ListFragment extends Fragment implements SearchableFragment {
                         requestUserLocalisation();
                     }
                     @Override public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(getContext(), "Authorization is required to use application", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getContext().getString(R.string.authorizationIsRequiredToUseApplication), Toast.LENGTH_LONG).show();
 
                     }
                     @Override public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
@@ -140,7 +140,7 @@ public class ListFragment extends Fragment implements SearchableFragment {
                             userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                             getPlacesRestaurants();
                         } else {
-                            Toast.makeText(getContext(), "We cannot access your location", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), getContext().getString(R.string.weCannotAccessYourLocation), Toast.LENGTH_LONG).show();
                         }
                     }
                 });

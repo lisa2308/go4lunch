@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Go4Lunch</string>
-
     <!-- BOTTOM NAVIGATION VIEW -->
     <string name="bottom_navigation_menu_map">Map View</string>
     <string name="bottom_navigation_menu_list">List View</string>
@@ -50,6 +49,21 @@
     <string name="activity_main_drawer_lunch">YOUR LUNCH</string>
     <string name="activity_main_drawer_settings">SETTINGS</string>
     <string name="activity_main_drawer_logout">LOGOUT</string>
+
+
+    <!-- PlaceUtils-->
+    <string name="closed">Closed</string>
+    <string name="nospecified">No specified</string>
+    <string name="openuntil">Ouvert jusqu\'à</string>
+    <string name="hour">:</string>
+
+    <!-- activityLogin-->
+    <string name="findAniceRestaurantAndInviteYourCoWorkersForLunch">Find a nice restaurant and invite your co-workers for lunch !</string>
+    <string name="signInWithFacebook">Sign in with Facebook</string>
+    <string name="signInWithGoogle">Sign in with Google</string>
+    <string name="signInWithTwitter">Sign in with Twitter</string>
+
+
 
 
 

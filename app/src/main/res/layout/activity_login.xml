@@ -45,7 +45,7 @@
         android:textStyle="bold"
         android:textColor="@color/colorText"
         android:textSize="12sp"
-        android:text="Find a nice restaurant and invite your co-workers for work"/>
+        android:text="@string/findAniceRestaurantAndInviteYourCoWorkersForLunch"/>
 
         <Button
             android:id="@+id/activity_login_btn_facebook"
@@ -53,8 +53,8 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:textAllCaps="false"
-            android:text="Sign in with Facebook"
-            android:layout_marginTop="70dp"
+            android:text="@string/signInWithFacebook"
+            android:layout_marginTop="50dp"
             android:drawablePadding="20dp"
             android:background="@color/colorFacebook"
             android:drawableLeft="@drawable/ic_facebook"
@@ -68,7 +68,7 @@
             android:layout_marginTop="15dp"
             android:background="@color/colorGoogle"
             android:drawablePadding="43dp"
-            android:text="Sign in with Google"
+            android:text="@string/signInWithGoogle"
             android:drawableLeft="@drawable/ic_google"
             android:textSize="18sp"/>
         <Button
@@ -79,7 +79,8 @@
             android:padding="16dp"
             android:layout_marginTop="15dp"
             android:background="@color/colorText"
-            android:text="Sign in with Twitter"
+            android:text="@string/signInWithTwitter"
+            android:textColor="@color/colorAccent"
             android:drawablePadding="40dp"
             android:drawableLeft="@drawable/ic_twitter"
             android:textSize="18sp"/>

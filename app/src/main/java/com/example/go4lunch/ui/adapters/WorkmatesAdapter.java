@@ -30,6 +30,7 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.Work
         this.context = context;
     }
 
+
     public static class WorkmatesHolder extends RecyclerView.ViewHolder{
         CircleImageView imageView;
         TextView textView;
@@ -55,19 +56,19 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.Work
         //position liée à la ligne donc change toute seule//
         final User user = userList.get(position);
         if (user.getRestaurantId() == null) {
-            holder.textView.setText(user.getUsername() + "hasn't decided yet");
+            holder.textView.setText(user.getUsername() + " " +context.getString(R.string.hasntDecidedYet));
             holder.textView.setTextColor(Color.GRAY);
             holder.textView.setTypeface(null, Typeface.ITALIC);
 
         }
         else {
             if (isWorkmateView) {
-            holder.textView.setText(user.getUsername() + "is eating at" + user.getRestaurantName());
+            holder.textView.setText(user.getUsername() + " " + context.getString(R.string.isEatingAt) + user.getRestaurantName());
             holder.textView.setTextColor(Color.BLACK);
             holder.textView.setTypeface(null, Typeface.NORMAL);
 
         }else {
-                holder.textView.setText(user.getUsername() + "is joining");
+                holder.textView.setText(user.getUsername() + " " + context.getString(R.string.isJoining));
                 holder.textView.setTextColor(Color.BLACK);
                 holder.textView.setTypeface(null, Typeface.NORMAL);
             }

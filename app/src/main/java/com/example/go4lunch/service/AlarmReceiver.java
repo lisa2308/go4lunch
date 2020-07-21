@@ -119,7 +119,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             return "No Workmate Will Join You";
 
         } else {
-            return "You eat with" + workmatesNames;
+            return "You eat with " + workmatesNames;
         }
 
     }

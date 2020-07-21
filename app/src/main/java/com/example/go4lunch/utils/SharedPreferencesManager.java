@@ -3,6 +3,8 @@ package com.example.go4lunch.utils;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
+// for alarmManager
+
 public class SharedPreferencesManager {
 
         public static String getString(Context context, String key){

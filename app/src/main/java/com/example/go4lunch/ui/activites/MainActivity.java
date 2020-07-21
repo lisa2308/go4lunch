@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         Place.Field.UTC_OFFSET
                 );
 
-                // Start the autocomplete intent.
+                // Start the autocomplete intent : google element for address
                 Intent intent = new Autocomplete.IntentBuilder(
                         AutocompleteActivityMode.OVERLAY, placeFields)
                         .setTypeFilter(TypeFilter.ESTABLISHMENT)
@@ -239,6 +239,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         transaction.commit();
     }
 
+    //click address in search to request
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -248,7 +249,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 if(searchableFragment !=null);
                 searchableFragment.performSearch(place);
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                // TODO: Handle the error.
                 Status status = Autocomplete.getStatusFromIntent(data);
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.

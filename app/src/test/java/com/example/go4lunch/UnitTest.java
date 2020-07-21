@@ -2,6 +2,7 @@ package com.example.go4lunch;
 
 import android.net.Uri;
 
+import com.example.go4lunch.service.AlarmReceiver;
 import com.example.go4lunch.utils.PlacesUtils;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -48,6 +49,17 @@ public class UnitTest {
         String actual = PlacesUtils.getDistanceBetweenTwoPoints(annecy, annemasse);
         String expected = "33822m";
 
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getWorkmatesNotifTextTest() {
+        AlarmReceiver alarmReceiver = new AlarmReceiver();
+        String actual = "No Workmate Will Join You";
+        String expected = alarmReceiver.getWorkmatesNotifText(null);
+        assertEquals(expected, actual);
+        actual = "You eat with Anthony" ;
+        expected = alarmReceiver.getWorkmatesNotifText("Anthony");
         assertEquals(expected, actual);
     }
 

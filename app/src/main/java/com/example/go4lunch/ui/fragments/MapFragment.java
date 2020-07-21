@@ -75,7 +75,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Searcha
 
         initPlacesClient();
 
-        getActivity().setTitle("I'm Hungry !");
+        getActivity().setTitle(getContext().getString(R.string.imHungry));
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fragment_map_googleMap);
         mapFragment.getMapAsync(this);
 
@@ -140,7 +140,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Searcha
                         requestUserLocalisation();
                     }
                     @Override public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(getContext(), "Authorization is required to use application", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getContext().getString(R.string.authorizationIsRequiredToUseApplication), Toast.LENGTH_LONG).show();
 
                     }
                     @Override public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
@@ -162,7 +162,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Searcha
                             zoomOnUserLocation(location.getLatitude(), location.getLongitude());
                             getPlacesRestaurants();
                         } else {
-                            Toast.makeText(getContext(), "We cannot access your location", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), getContext().getString(R.string.weCannotAccessYourLocation), Toast.LENGTH_LONG).show();
                         }
                     }
                 });

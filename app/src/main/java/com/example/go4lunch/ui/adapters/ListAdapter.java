@@ -129,10 +129,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListHolder>{
         });
 
     }
-
-    //Picasso.get().load("https://www.nytimes.com/" + doc.getMultimedia().get(0).getUrl()).into(holder.image);
-    //        }
-
     //ITEM'S NUMBER//
     @Override
     public int getItemCount(){

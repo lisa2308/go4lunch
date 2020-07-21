@@ -44,7 +44,6 @@ public class InstrumentedTest {
         });
         onView(withText(activityRule.getActivity().getString(R.string.yourLunch))).check(matches(isDisplayed()));
 
-
     }
 
     @Test
