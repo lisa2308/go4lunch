@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         MapFragment fragment = new MapFragment();
         searchableFragment = fragment;
-        replaceFragment(new MapFragment());
+        replaceFragment(fragment);
 
     }
 
@@ -164,12 +164,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.activity_main_bottom_map:
                 MapFragment fragment = new MapFragment();
                 searchableFragment = fragment;
-                replaceFragment(new MapFragment());
+                replaceFragment(fragment);
                 break;
             case R.id.activity_main_bottom_list:
                 ListFragment listFragment = new ListFragment();
                 searchableFragment = listFragment;
-                replaceFragment(new ListFragment());
+                replaceFragment(listFragment);
                 break;
             case R.id.activity_main_bottom_workmates:
                 searchableFragment = null;

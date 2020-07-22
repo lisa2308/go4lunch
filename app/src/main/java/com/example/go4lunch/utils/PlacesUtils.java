@@ -54,6 +54,9 @@ public class PlacesUtils {
     }
 
     public static String getDistanceBetweenTwoPoints(LatLng userPosition, LatLng restaurantPosition) {
+        if(userPosition==null||restaurantPosition==null)
+            return "/";
+
         float[] distance = new float[2];
         Location.distanceBetween(
                 userPosition.latitude,

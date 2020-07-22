@@ -38,6 +38,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
@@ -165,11 +166,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Searcha
                             Toast.makeText(getContext(), getContext().getString(R.string.weCannotAccessYourLocation), Toast.LENGTH_LONG).show();
                         }
                     }
-                });
+                }).addOnFailureListener(getActivity(), new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println(e.getMessage());
+            }
+        });
     }
 
     public void zoomOnUserLocation(double userLat, double userLng) {
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(userLat, userLng), 16.5f));
+        if(googleMap!=null)
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(userLat, userLng), 16.5f));
     }
 
     public void initPlacesClient() {
@@ -272,6 +279,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Searcha
 
     }
     private Restaurant getRestaurantFromPlace (Place place) {
+        System.out.println(userLatLng);
         return new Restaurant(
                 place.getId(),
                 place.getName(),
