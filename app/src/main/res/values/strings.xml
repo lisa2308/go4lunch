@@ -19,11 +19,11 @@
     <string name="didntSelectRestaurant">Vous n\'avez pas selectionné de restaurant</string>
     <string name="youEatAt">Vous mangez à</string>
     <!-- Workmates Adapter -->
-    <string name="hasntDecidedYet">N\'a pas encore décidé</string>
-    <string name="isEatingAt">Mange à</string>
-    <string name="isJoining">Se joint</string>
+    <string name="hasntDecidedYet">n\'a pas encore décidé</string>
+    <string name="isEatingAt">mange à</string>
+    <string name="isJoining">se joint</string>
     <!-- List Fragment -->
-    <string name="imHungry">J\'ai faim</string>
+    <string name="imHungry">J\'ai faim!</string>
     <string name="authorizationIsRequiredToUseApplication">L\'autorisation est obligatoire pour utiliser l\'application</string>
     <string name="weCannotAccessYourLocation">Nous n\'arrivons pas à accéder à votre localisation</string>
     <!-- Workmates Fragment -->

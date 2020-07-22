@@ -63,7 +63,7 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.Work
         }
         else {
             if (isWorkmateView) {
-            holder.textView.setText(user.getUsername() + " " + context.getString(R.string.isEatingAt) + user.getRestaurantName());
+            holder.textView.setText(user.getUsername() + " " + context.getString(R.string.isEatingAt)+ " " + user.getRestaurantName());
             holder.textView.setTextColor(Color.BLACK);
             holder.textView.setTypeface(null, Typeface.NORMAL);
 
