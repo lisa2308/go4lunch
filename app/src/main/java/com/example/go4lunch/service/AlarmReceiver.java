@@ -96,16 +96,16 @@ public class AlarmReceiver extends BroadcastReceiver {
     private void createNotification(Context context, String restaurantName, String workmatesNames) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("You eat at" + restaurantName)
+                .setContentTitle(context.getString(R.string.youEatAt) + " " + restaurantName)
                 .setContentText(getWorkmatesNotifText(workmatesNames))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Lunch informations";
+            CharSequence name = context.getString(R.string.lunchInformations);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription("Receive daily notifications about your lunches");
+            channel.setDescription(context.getString(R.string.receiveDailyNotificationsAboutYourLunches));
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             Objects.requireNonNull(notificationManager).createNotificationChannel(channel);
         }
@@ -116,10 +116,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     public String getWorkmatesNotifText(String workmatesNames) {
         if (workmatesNames == null) {
-            return "No Workmate Will Join You";
+            return mContext.getString(R.string.noWorkmateWillJoinYou);
 
         } else {
-            return "You eat with " + workmatesNames;
+            return mContext.getString(R.string.youEatWith) + " " + workmatesNames;
         }
 
     }

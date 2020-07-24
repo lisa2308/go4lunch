@@ -1,5 +1,6 @@
 package com.example.go4lunch.utils;
 
+import android.content.Context;
 import android.location.Location;
 import android.net.Uri;
 
